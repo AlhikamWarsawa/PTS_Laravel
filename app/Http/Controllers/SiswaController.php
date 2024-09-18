@@ -16,6 +16,12 @@ class SiswaController extends Controller
         return view('pendaftaran.tableSiswa', compact('siswas'));
     }
 
+    public function SiswaSiswa()
+    {
+        $siswas = Siswa::paginate(10);
+        return view('pendaftaran.tableSiswaSiswa', compact('siswas'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -62,7 +68,8 @@ class SiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $siswa = Siswa::findOrFail($id);
+        return view('pendaftaran.DetailSiswa', compact('siswa'));
     }
 
     /**

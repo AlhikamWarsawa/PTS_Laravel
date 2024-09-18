@@ -11,15 +11,20 @@ class JurusanController extends Controller
     {
         $jurusans = Jurusan::all();
         return view('Jurusan.Jurusan', compact('jurusans'));
-
     }
 
-    /**
+    public function jurusanSiswa()
+    {
+        $jurusans = Jurusan::all();
+        return view('Jurusan.JurusanSiswa', compact('jurusans'));
+    }
+
+        /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('Jurusan.tambah');
     }
 
     /**
@@ -27,7 +32,22 @@ class JurusanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi data
+        $request->validate([
+            'jurusan' => 'required|string|max:255',
+            'detail' => 'required|string',
+        ]);
+
+        // Buat instance baru dari model Jurusan
+        $jurusan = new Jurusan();
+        $jurusan->Jurusan = $request->jurusan;
+        $jurusan->Detail = $request->detail;
+
+        // Simpan data ke database
+        $jurusan->save();
+
+        // Redirect ke halaman daftar jurusan
+        return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
     /**
